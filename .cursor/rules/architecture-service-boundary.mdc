@@ -1,0 +1,73 @@
+---
+alwaysApply: true
+---
+---
+description: Enforce clean architecture boundaries, service-based business logic, readability, reuse, and maintainability.
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+alwaysApply: true
+---
+
+# Architecture and Code Quality Rules
+
+## Core Principle
+
+All code must prioritize:
+- maintainability
+- readability
+- reusability
+- predictability
+- separation of concerns
+
+Code should be easy to understand, easy to change, and hard to break.
+
+---
+
+## 1. No Business Logic in UI Layers
+
+The following layers must NOT contain business logic:
+- pages
+- screens
+- route components
+- layout components
+- presentational components
+
+UI layers are only responsible for:
+- rendering UI
+- handling user interaction events
+- collecting input values
+- passing data to services/hooks/controllers
+- displaying response state
+
+UI layers must NOT:
+- contain API orchestration logic
+- transform domain data in complex ways
+- include validation rules beyond simple UI validation
+- contain conditional branching for business policy
+- directly manage business workflows
+- duplicate business rules already defined elsewhere
+
+### Allowed in UI
+- local UI state
+- modal open/close
+- tab switching
+- form input binding
+- loading/error rendering
+- invoking hooks, controllers, or services
+
+### Not allowed in UI
+- payment rule calculation
+- permission decision logic
+- domain-specific validation chains
+- multi-step API execution flows
+- reusable data transformation logic
+- business-dependent filtering or mapping logic
+
+### Bad Example
+```ts
+if (user.role === "admin" && order.status === "PAID" && order.items.length > 0) {
+  await api.refund(order.id)
+}

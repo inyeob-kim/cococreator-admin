@@ -9,6 +9,9 @@ class Settings:
         "DATABASE_URL",
         "postgresql+psycopg://postgres:postgres@localhost:5432/cococreator_admin",
     )
+    AUTH_SECRET_KEY = os.getenv("AUTH_SECRET_KEY", "change-me-in-production")
+    ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
+    REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", "14"))
 
 
 settings = Settings()

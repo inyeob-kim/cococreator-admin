@@ -1,0 +1,1 @@
+TEMPLATE_TAG = "templates"
